@@ -1,8 +1,12 @@
 // App.js
-import React, { useState } from 'react';
-import UploadCV from './components/UploadCV';
-import EditCV from './components/EditCV';
-import CVList from './components/CVList';
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import BarraSuperior from "./components/BarraSuperior";
+import SubirCV from "./components/SubirCV";
+import Home from "./components/Home";
+import EliminarCV from "./components/EliminarCV";
+import ModificarCV from "./components/ModificarCV";
+import ListaCV from "./components/ListaCV";
 
 const App = () => {
   const [cvs, setCvs] = useState([]); // Estado para almacenar los currículos
@@ -13,9 +17,17 @@ const App = () => {
 
   return (
     <div>
-      <UploadCV />
-     
-      <CVList cvs={cvs} onDelete={handleDelete} />
+      <Routes>
+        <Route path="/" element={<BarraSuperior />}>
+          <Route index element={<Home />} />
+          <Route path="cv">
+            <Route index element={<ListaCV />} />
+            <Route path="agregar" element={<SubirCV />} />
+            <Route path="eliminar/:m" element={<EliminarCV />} />
+            <Route path="modificar/:m" element={<ModificarCV />} />
+          </Route>
+        </Route>
+      </Routes>
     </div>
   );
 };
